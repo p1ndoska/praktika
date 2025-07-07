@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: db
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Str0ngP@ssw0rd!
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+    restart: unless-stopped
+  backend:
+    build: ./server
+    container_name: node-server
+    environment:
+      - DB_USER=sa
+      - DB_PASSWORD=Str0ngP@ssw0rd!
+      - DB_SERVER=db
+      - DB_DATABASE=master
+      - NODE_ENV=production
+      - PORT=5000
+      - JWT_SECRET=supersecretkey123
+      - JWT_EXPIRES_IN=30m
+    ports:
+      - "5000:5000"
+  frontend:
+    build: ./client
+    container_name: frontend
+    ports:
+      - "3000:3000"
+volumes:
+  mssql_data: 

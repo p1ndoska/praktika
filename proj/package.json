@@ -1,0 +1,16 @@
+{
+  "name": "auth-project",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npm run start --prefix server",
+    "server": "npm run server --prefix server",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install-all": "npm install && npm install --prefix server && npm install --prefix client"
+  },
+  "dependencies": {
+    "concurrently": "^7.6.0",
+    "react-input-mask-next": "^3.0.0-alpha.12",
+    "react-select": "^5.10.1"
+  }
+}
