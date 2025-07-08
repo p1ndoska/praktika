@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/organizations';
+const API_URL = `${process.env.SERVER_URL}/api/organizations`;
 
 const getOrganizations = async (token) => {
     const config = {

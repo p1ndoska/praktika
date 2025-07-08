@@ -217,7 +217,7 @@ const ExternalConnectionForm = ({
 
       console.log('Отправляемые данные:', requestData);
 
-      const url = isEditMode ? `http://localhost:5000/api/external-connections/${form.id}` : 'http://localhost:5000/api/external-connections/add';
+      const url = isEditMode ? `${process.env.SERVER_URL}/api/external-connections/${form.id}` : `${process.env.SERVER_URL}/api/external-connections/add`;
       const method = isEditMode ? 'put' : 'post';
 
       const response = await axios[method](url, requestData, {

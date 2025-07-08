@@ -104,7 +104,7 @@ const CreateRecord = () => {
         // Получаем список внешних подключений
         const fetchConnections = async () => {
             try {
-                const res = await axios.get('http://localhost:5000/api/external-connections', {
+                const res = await axios.get(`${process.env.SERVER_URL}/api/external-connections`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setExternalConnections(res.data.data || res.data);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/records';
+const API_URL = `${process.env.SERVER_URL}/api/records`;
 
 const getRecords = async (token) => {
     const config = {
