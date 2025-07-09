@@ -44,7 +44,7 @@ export const AuthProvider = ({ children }) => {
             if (token && user) return; // Если уже есть пользователь, пропускаем
 
             try {
-                const response = await axios.get((process.env.REACT_APP_API_URL || '') + '/api/auth/me', {
+                const response = await axios.get('http://192.168.1.195:5000/api/auth/me', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 

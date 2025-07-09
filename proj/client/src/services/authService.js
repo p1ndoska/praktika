@@ -1,7 +1,6 @@
 import axios from 'axios';
-import dotenv from 'dotenv';
 
-const API_URL = `${process.env.SERVER_URL}/api/auth`;
+const API_URL = `http://192.168.1.195:5000/api/auth`;
 
 const login = async (username, password) => {
     try {

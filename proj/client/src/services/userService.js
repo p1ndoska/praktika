@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = `${process.env.SERVER_URL}/api/users`;
+const API_URL = `http://192.168.1.195:5000/api/users`;
 
 // Глобальный перехватчик для обработки 401 Unauthorized
 axios.interceptors.response.use(

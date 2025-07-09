@@ -24,7 +24,7 @@ const OrganizationList = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.get(`${process.env.SERVER_URL}/api/organizations`, {
+      const res = await axios.get(`http://192.168.1.195:5000/api/organizations`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setOrganizations(res.data);
@@ -45,7 +45,7 @@ const OrganizationList = () => {
     setSuccess('');
     if (!name.trim()) return setError('Введите название организации');
     try {
-      await axios.post(`${process.env.SERVER_URL}/api/organizations`, { name }, {
+      await axios.post(`http://192.168.1.195:5000/api/organizations`, { name }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSuccess('Организация добавлена');
@@ -61,7 +61,7 @@ const OrganizationList = () => {
     setError('');
     setSuccess('');
     try {
-      await axios.delete(`${process.env.SERVER_URL}/api/organizations/${id}`, {
+      await axios.delete(`http://192.168.1.195:5000/api/organizations/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSuccess('Организация удалена');
