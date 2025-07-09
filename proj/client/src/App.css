@@ -57,3 +57,58 @@
     display: table;
   }
 }
+
+/* Стили для улучшения отображения больших текстов в полях ввода */
+.form-control {
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+/* Специальные стили для textarea */
+.form-control[as="textarea"],
+textarea.form-control {
+  resize: vertical;
+  min-height: 80px;
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  line-height: 1.5;
+}
+
+/* Стили для текстовых полей с большим содержимым */
+.form-control[type="text"],
+.form-control[type="email"] {
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  min-height: 38px;
+  line-height: 1.4;
+}
+
+/* Стили для отображения длинного текста в ячейках таблицы */
+.record-table td {
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  max-width: 200px;
+  vertical-align: top;
+  text-align: left;
+  padding: 8px;
+}
+
+/* Стили для мобильных устройств */
+@media (max-width: 768px) {
+  .form-control {
+    font-size: 16px; /* Предотвращает зум на iOS */
+  }
+  
+  .record-table td {
+    max-width: 150px;
+    font-size: 14px;
+  }
+}

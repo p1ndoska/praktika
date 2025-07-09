@@ -5,6 +5,7 @@ import { useAuth } from '../../context/authContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import Select from 'react-select';
 import positionService from '../../services/positionService';
+import './RecordForms.css';
 
 const EditRecord = () => {
     const { token, user } = useAuth();
@@ -307,10 +308,11 @@ const EditRecord = () => {
                                     <Form.Label>Виды выполняемых работ</Form.Label>
                                     <Form.Control
                                         as="textarea"
-                                        rows={2}
+                                        rows={3}
                                         name="WorkTypes"
                                         value={formData.WorkTypes}
                                         onChange={handleChange}
+                                        style={{ minHeight: '80px', resize: 'vertical' }}
                                     />
                                 </Form.Group>
                             </Col>
@@ -490,10 +492,11 @@ const EditRecord = () => {
                             <Form.Label>Примечания</Form.Label>
                             <Form.Control
                                 as="textarea"
-                                rows={3}
+                                rows={4}
                                 name="Notes"
                                 value={formData.Notes}
                                 onChange={handleChange}
+                                style={{ minHeight: '100px', resize: 'vertical' }}
                             />
                         </Form.Group>
 

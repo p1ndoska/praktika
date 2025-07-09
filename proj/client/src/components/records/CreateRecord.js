@@ -7,6 +7,7 @@ import axios from 'axios';
 import Select from 'react-select';
 import positionService from '../../services/positionService';
 import API_BASE_URL from '../../apiConfig';
+import './RecordForms.css';
 
 function formatPhone(value) {
     let digits = value.replace(/\D/g, '');
@@ -338,10 +339,11 @@ const CreateRecord = () => {
                                     <Form.Label>Виды выполняемых работ</Form.Label>
                                     <Form.Control
                                         as="textarea"
-                                        rows={2}
+                                        rows={3}
                                         name="WorkTypes"
                                         value={formData.WorkTypes}
                                         onChange={handleChange}
+                                        style={{ minHeight: '80px', resize: 'vertical' }}
                                     />
                                 </Form.Group>
                             </Col>
@@ -539,10 +541,11 @@ const CreateRecord = () => {
                             <Form.Label>Примечания</Form.Label>
                             <Form.Control
                                 as="textarea"
-                                rows={3}
+                                rows={4}
                                 name="Notes"
                                 value={formData.Notes}
                                 onChange={handleChange}
+                                style={{ minHeight: '100px', resize: 'vertical' }}
                             />
                         </Form.Group>
 

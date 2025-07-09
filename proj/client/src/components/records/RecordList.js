@@ -15,6 +15,7 @@ import {
 import recordService from '../../services/recordService';
 import { useAuth } from '../../context/authContext';
 import { useNavigate } from 'react-router-dom';
+import './RecordForms.css';
 
 const RecordList = () => {
     const { token, user } = useAuth();
@@ -225,12 +226,21 @@ const RecordList = () => {
             verticalAlign: 'middle',
             whiteSpace: 'normal',
             overflow: 'visible',
+            wordWrap: 'break-word',
+            wordBreak: 'break-word',
+            overflowWrap: 'break-word',
         },
         td: {
             wordWrap: 'break-word',
-            whiteSpace: 'normal',
-            overflow: 'hidden',
+            wordBreak: 'break-word',
+            whiteSpace: 'pre-wrap',
+            overflowWrap: 'break-word',
             textOverflow: 'ellipsis',
+            verticalAlign: 'top',
+            textAlign: 'left',
+            padding: '8px',
+            maxWidth: '400px', // увеличено
+            minWidth: '180px', // увеличено
         },
         sortableHeader: {
             cursor: 'pointer',
@@ -320,7 +330,7 @@ const RecordList = () => {
     };
 
     return (
-        <Container className="mt-5">
+        <Container fluid className="mt-5" style={{maxWidth: '1800px'}}>
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <h2>Журнал доступа</h2>
                 <div className="d-flex gap-2">
@@ -333,213 +343,233 @@ const RecordList = () => {
                 </div>
             </div>
 
-            <Row>
-                {/* Левая колонка с фильтрами */}
-                <Col md={4} className="mb-4">
-                    <Card>
-                        <Card.Header>Фильтры</Card.Header>
-                        <Card.Body>
-                            <Form.Group className="mb-3">
-                                <Form.Label>ФИО</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="UserFullName"
-                                    value={filters.UserFullName}
-                                    onChange={handleFilterChange}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Организация</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="OrganizationName"
-                                    value={filters.OrganizationName}
-                                    onChange={handleFilterChange}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Объект подключения</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="ObjectName"
-                                    value={filters.ObjectName}
-                                    onChange={handleFilterChange}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Тип доступа</Form.Label>
-                                <Form.Select
-                                    name="AccessType"
-                                    value={filters.AccessType}
-                                    onChange={handleFilterChange}
-                                >
-                                    <option value="">Все</option>
-                                    <option value="локальный">Локальный</option>
-                                    <option value="удаленный">Удаленный</option>
-                                </Form.Select>
-                            </Form.Group>
-
-                            <Form.Group className="mb-3">
-                                <Form.Label>Дата начала доступа с</Form.Label>
-                                <Form.Control
-                                    type="date"
-                                    name="AccessStartDateFrom"
-                                    value={filters.AccessStartDateFrom}
-                                    onChange={handleFilterChange}
-                                    max={filters.AccessStartDateTo || undefined}
-                                />
-                                <FormText muted>
-                                    {getDateFilterHint()}
-                                </FormText>
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>по</Form.Label>
-                                <Form.Control
-                                    type="date"
-                                    name="AccessStartDateTo"
-                                    value={filters.AccessStartDateTo}
-                                    onChange={handleFilterChange}
-                                    min={filters.AccessStartDateFrom || undefined}
-                                />
-                            </Form.Group>
-
-                            <Form.Group className="mb-3">
-                                <Form.Label>Куратор</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="Curator"
-                                    value={filters.Curator}
-                                    onChange={handleFilterChange}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Исполнитель</Form.Label>
-                                <Form.Control
-                                    type="text"
-                                    name="Executor"
-                                    value={filters.Executor}
-                                    onChange={handleFilterChange}
-                                />
-                            </Form.Group>
-                            <div className="d-flex justify-content-end">
-                                <Button variant="secondary" onClick={resetFilters}>
+            {/* Фильтры над таблицей */}
+            <Card className="mb-4">
+                <Card.Header>Фильтры</Card.Header>
+                <Card.Body>
+                    <Form>
+                        <Row className="g-2">
+                            <Col md={3} sm={6} xs={12}>
+                                <Form.Group>
+                                    <Form.Label>ФИО</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="UserFullName"
+                                        value={filters.UserFullName}
+                                        onChange={handleFilterChange}
+                                        style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md={3} sm={6} xs={12}>
+                                <Form.Group>
+                                    <Form.Label>Организация</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="OrganizationName"
+                                        value={filters.OrganizationName}
+                                        onChange={handleFilterChange}
+                                        style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md={3} sm={6} xs={12}>
+                                <Form.Group>
+                                    <Form.Label>Объект подключения</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="ObjectName"
+                                        value={filters.ObjectName}
+                                        onChange={handleFilterChange}
+                                        style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md={2} sm={6} xs={12}>
+                                <Form.Group>
+                                    <Form.Label>Тип доступа</Form.Label>
+                                    <Form.Select
+                                        name="AccessType"
+                                        value={filters.AccessType}
+                                        onChange={handleFilterChange}
+                                    >
+                                        <option value="">Все</option>
+                                        <option value="локальный">Локальный</option>
+                                        <option value="удаленный">Удаленный</option>
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                            <Col md={2} sm={6} xs={12}>
+                                <Form.Group>
+                                    <Form.Label>Дата начала с</Form.Label>
+                                    <Form.Control
+                                        type="date"
+                                        name="AccessStartDateFrom"
+                                        value={filters.AccessStartDateFrom}
+                                        onChange={handleFilterChange}
+                                        max={filters.AccessStartDateTo || undefined}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md={2} sm={6} xs={12}>
+                                <Form.Group>
+                                    <Form.Label>по</Form.Label>
+                                    <Form.Control
+                                        type="date"
+                                        name="AccessStartDateTo"
+                                        value={filters.AccessStartDateTo}
+                                        onChange={handleFilterChange}
+                                        min={filters.AccessStartDateFrom || undefined}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md={2} sm={6} xs={12}>
+                                <Form.Group>
+                                    <Form.Label>Куратор</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="Curator"
+                                        value={filters.Curator}
+                                        onChange={handleFilterChange}
+                                        style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md={2} sm={6} xs={12}>
+                                <Form.Group>
+                                    <Form.Label>Исполнитель</Form.Label>
+                                    <Form.Control
+                                        type="text"
+                                        name="Executor"
+                                        value={filters.Executor}
+                                        onChange={handleFilterChange}
+                                        style={{ wordBreak: 'break-word', whiteSpace: 'pre-wrap' }}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col md={2} sm={6} xs={12} className="d-flex align-items-end">
+                                <Button variant="secondary" onClick={resetFilters} className="w-100">
                                     Сбросить фильтры
                                 </Button>
-                            </div>
-                        </Card.Body>
-                    </Card>
-                </Col>
+                            </Col>
+                        </Row>
+                        {getDateFilterHint() && (
+                            <div className="text-muted mt-2">{getDateFilterHint()}</div>
+                        )}
+                    </Form>
+                </Card.Body>
+            </Card>
 
-                {/* Правая колонка с таблицей и пагинацией */}
-                <Col md={8}>
-                    <div style={{ overflowX: 'auto' }}>
-                        <Table striped bordered hover responsive style={tableStyles.table}>
-                            <thead>
-                            <tr>
-                                <th style={tableStyles.th}>№ п/п</th>
-                                <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader }} onClick={() => requestSort('UserFullName')}>
-                                    Ф.И.О, должность, email, телефон контактного лица{getSortIndicator('UserFullName')}
-                                </th>
-                                <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader }} onClick={() => requestSort('OrganizationName')}>
-                                    Наименование стороннего пользователя (организации){getSortIndicator('OrganizationName')}
-                                </th>
-                                <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader }} onClick={() => requestSort('ExternalUserName')}>
-                                    ФИО, должность, email, телефон стороннего пользователя{getSortIndicator('ExternalUserName')}
-                                </th>
-                                <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader }} onClick={() => requestSort('ObjectName')}>
-                                    Сведения об объекте подключения{getSortIndicator('ObjectName')}
-                                </th>
-                                <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader }} onClick={() => requestSort('WorkTypes')}>
-                                    Виды выполняемых работ{getSortIndicator('WorkTypes')}
-                                </th>
-                                <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader }} onClick={() => requestSort('AccessType')}>
-                                    Тип доступа (локальный/удаленный){getSortIndicator('AccessType')}
-                                </th>
-                                <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader }} onClick={() => requestSort('AccessStartDate')}>
-                                    Срок предоставления доступа{getSortIndicator('AccessStartDate')}
-                                </th>
-                                <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader }} onClick={() => requestSort('ActualConnectionDate')}>
-                                    Фактическое время подключения/отключения{getSortIndicator('ActualConnectionDate')}
-                                </th>
-                                <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader }} onClick={() => requestSort('Curator')}>
-                                    Куратор{getSortIndicator('Curator')}
-                                </th>
-                                <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader }} onClick={() => requestSort('Executor')}>
-                                    Исполнитель{getSortIndicator('Executor')}
-                                </th>
-                                <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader }} onClick={() => requestSort('Notes')}>
-                                    Примечание{getSortIndicator('Notes')}
-                                </th>
-                                {user.role === 'admin' && <th style={tableStyles.th}>Действия</th>}
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {currentRecords.length > 0 ? (
-                                currentRecords.map((record, index) => (
-                                    <tr key={record.RecordId}>
-                                        <td>{indexOfFirstRecord + index + 1}</td>
-                                        <td>
-                                            <div><strong>{record.UserFullName}</strong></div>
-                                            <div>{record.Position}</div>
-                                            <div>{record.Email}</div>
-                                            <div>{record.Phone}</div>
-                                        </td>
-                                        <td>{record.OrganizationName}</td>
-                                        <td>
-                                            {record.ExternalUserName && (
-                                                <>
-                                                    <div><strong>{record.ExternalUserName}</strong></div>
-                                                    <div>{record.ExternalUserPosition}</div>
-                                                    <div>{record.ExternalUserEmail}</div>
-                                                    <div>{record.ExternalUserPhone}</div>
-                                                </>
-                                            )}
-                                        </td>
-                                        <td>{record.ObjectName}</td>
-                                        <td>{record.WorkTypes}</td>
-                                        <td>{record.AccessType}</td>
-                                        <td>
-                                            {new Date(record.AccessStartDate).toLocaleString()}<br/>
-                                            {record.AccessEndDate ? new Date(record.AccessEndDate).toLocaleString() : 'не указано'}
-                                        </td>
-                                        <td>
-                                            {record.ActualConnectionDate ? new Date(record.ActualConnectionDate).toLocaleString() : 'не подключено'}<br/>
-                                            {record.ActualDisconnectionDate ? new Date(record.ActualDisconnectionDate).toLocaleString() : 'не отключено'}
-                                        </td>
-                                        <td>{record.Curator}</td>
-                                        <td>{record.Executor}</td>
-                                        <td>{record.Notes}</td>
-                                        {user.role === 'admin' && (
-                                            <td>
-                                                <Button
-                                                    variant="primary"
-                                                    size="sm"
-                                                    className="me-2 mb-2"
-                                                    onClick={() => navigate(`/records/edit/${record.RecordId}`)}
-                                                >
-                                                    Редактировать
-                                                </Button>
-                                                <Button
-                                                    variant="danger"
-                                                    size="sm"
-                                                    onClick={() => handleDelete(record.RecordId)}
-                                                >
-                                                    Удалить
-                                                </Button>
-                                            </td>
-                                        )}
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan={user.role === 'admin' ? 12 : 11} className="text-center">
-                                        Нет записей, соответствующих выбранным фильтрам
+            <div style={{ overflowX: 'auto' }}>
+                <Table striped bordered hover responsive className="record-table" style={tableStyles.table}>
+                    <thead>
+                    <tr>
+                        <th style={tableStyles.th}>№ п/п</th>
+                        <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader, minWidth: 220, maxWidth: 420 }} onClick={() => requestSort('UserFullName')}>
+                            Ф.И.О, должность, email, телефон контактного лица{getSortIndicator('UserFullName')}
+                        </th>
+                        <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader, minWidth: 180, maxWidth: 320 }} onClick={() => requestSort('OrganizationName')}>
+                            Наименование стороннего пользователя (организации){getSortIndicator('OrganizationName')}
+                        </th>
+                        <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader, minWidth: 220, maxWidth: 420 }} onClick={() => requestSort('ExternalUserName')}>
+                            ФИО, должность, email, телефон стороннего пользователя{getSortIndicator('ExternalUserName')}
+                        </th>
+                        <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader, minWidth: 180, maxWidth: 320 }} onClick={() => requestSort('ObjectName')}>
+                            Сведения об объекте подключения{getSortIndicator('ObjectName')}
+                        </th>
+                        <th style={{ ...tableStyles.th, ...tableStyles.sortableHeader, minWidth: 180, maxWidth: 320 }} onClick={() => requestSort('WorkTypes')}>
+                            Виды выполняемых работ{getSortIndicator('WorkTypes')}
+                        </th>
+                        <th style={tableStyles.th} onClick={() => requestSort('AccessType')}>
+                            Тип доступа (локальный/удаленный){getSortIndicator('AccessType')}
+                        </th>
+                        <th style={tableStyles.th} onClick={() => requestSort('AccessStartDate')}>
+                            Срок предоставления доступа{getSortIndicator('AccessStartDate')}
+                        </th>
+                        <th style={tableStyles.th} onClick={() => requestSort('ActualConnectionDate')}>
+                            Фактическое время подключения/отключения{getSortIndicator('ActualConnectionDate')}
+                        </th>
+                        <th style={tableStyles.th} onClick={() => requestSort('Curator')}>
+                            Куратор{getSortIndicator('Curator')}
+                        </th>
+                        <th style={tableStyles.th} onClick={() => requestSort('Executor')}>
+                            Исполнитель{getSortIndicator('Executor')}
+                        </th>
+                        <th style={tableStyles.th} onClick={() => requestSort('Notes')}>
+                            Примечание{getSortIndicator('Notes')}
+                        </th>
+                        {user.role === 'admin' && <th style={tableStyles.th}>Действия</th>}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {currentRecords.length > 0 ? (
+                        currentRecords.map((record, index) => (
+                            <tr key={record.RecordId}>
+                                <td>{indexOfFirstRecord + index + 1}</td>
+                                <td style={{...tableStyles.td, wordBreak: 'break-word'}}>
+                                    <div><strong>{record.UserFullName}</strong></div>
+                                    <div>{record.Position}</div>
+                                    <div>{record.Email}</div>
+                                    <div>{record.Phone}</div>
+                                </td>
+                                <td style={{...tableStyles.td, wordBreak: 'break-word'}}>{record.OrganizationName}</td>
+                                <td style={{...tableStyles.td, wordBreak: 'break-word'}}>
+                                    {record.ExternalUserName && (
+                                        <>
+                                            <div><strong>{record.ExternalUserName}</strong></div>
+                                            <div>{record.ExternalUserPosition}</div>
+                                            <div>{record.ExternalUserEmail}</div>
+                                            <div>{record.ExternalUserPhone}</div>
+                                        </>
+                                    )}
+                                </td>
+                                <td style={{...tableStyles.td, wordBreak: 'break-word'}}>{record.ObjectName}</td>
+                                <td style={{...tableStyles.td, wordBreak: 'break-word'}}>{record.WorkTypes}</td>
+                                <td style={{...tableStyles.td, wordBreak: 'break-word'}}>{record.AccessType}</td>
+                                <td style={{...tableStyles.td, wordBreak: 'break-word'}}>
+                                    {new Date(record.AccessStartDate).toLocaleString()}<br/>
+                                    {record.AccessEndDate ? new Date(record.AccessEndDate).toLocaleString() : 'не указано'}
+                                </td>
+                                <td style={{...tableStyles.td, wordBreak: 'break-word'}}>
+                                    {record.ActualConnectionDate ? new Date(record.ActualConnectionDate).toLocaleString() : 'не подключено'}<br/>
+                                    {record.ActualDisconnectionDate ? new Date(record.ActualDisconnectionDate).toLocaleString() : 'не отключено'}
+                                </td>
+                                <td style={{...tableStyles.td, wordBreak: 'break-word'}}>{record.Curator}</td>
+                                <td style={{...tableStyles.td, wordBreak: 'break-word'}}>{record.Executor}</td>
+                                <td style={{...tableStyles.td, wordBreak: 'break-word'}}>{record.Notes}</td>
+                                {user.role === 'admin' && (
+                                    <td>
+                                        <Button
+                                            variant="primary"
+                                            size="sm"
+                                            className="me-2 mb-2"
+                                            onClick={() => navigate(`/records/edit/${record.RecordId}`)}
+                                            title="Редактировать"
+                                        >
+                                            <i className="bi bi-pencil"></i>
+                                        </Button>
+                                        <Button
+                                            variant="danger"
+                                            size="sm"
+                                            onClick={() => handleDelete(record.RecordId)}
+                                            title="Удалить"
+                                        >
+                                            <i className="bi bi-trash"></i>
+                                        </Button>
                                     </td>
-                                </tr>
-                            )}
-                            </tbody>
-                        </Table>
-                    </div>
+                                )}
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan={user.role === 'admin' ? 12 : 11} className="text-center">
+                                Нет записей, соответствующих выбранным фильтрам
+                            </td>
+                        </tr>
+                    )}
+                    </tbody>
+                </Table>
+            </div>
 
                     {/* Пагинация */}
                     {processedRecords.length > recordsPerPage && (
@@ -573,8 +603,6 @@ const RecordList = () => {
                             </Pagination>
                         </div>
                     )}
-                </Col>
-            </Row>
         </Container>
     );
 };
