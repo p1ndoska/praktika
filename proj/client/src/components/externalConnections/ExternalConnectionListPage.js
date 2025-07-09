@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../../context/authContext';
 import ExternalConnectionList from './ExternalConnectionList';
 import Pagination from '../Pagination';
+import API_BASE_URL from '../../apiConfig';
 
 const ExternalConnectionListPage = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const ExternalConnectionListPage = () => {
   const fetchConnections = async (page = 1) => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://192.168.1.195:5000/api/external-connections?page=${page}&limit=${limit}`, {
+      const response = await axios.get(`${API_BASE_URL}/api/external-connections?page=${page}&limit=${limit}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -57,7 +58,7 @@ const ExternalConnectionListPage = () => {
     if (!window.confirm('Удалить подключение?')) return;
     
     try {
-      await axios.delete(`http://192.168.1.195:5000/api/external-connections/${id}`, {
+      await axios.delete(`${API_BASE_URL}/api/external-connections/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       

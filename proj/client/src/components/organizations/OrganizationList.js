@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../context/authContext';
 import Pagination from '../Pagination';
+import API_BASE_URL from '../../apiConfig';
 
 const OrganizationList = () => {
   const { user, token } = useAuth();
@@ -24,7 +25,7 @@ const OrganizationList = () => {
     setLoading(true);
     setError('');
     try {
-      const res = await axios.get(`http://192.168.1.195:5000/api/organizations`, {
+      const res = await axios.get(`${API_BASE_URL}/api/organizations`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setOrganizations(res.data);
@@ -45,7 +46,7 @@ const OrganizationList = () => {
     setSuccess('');
     if (!name.trim()) return setError('Введите название организации');
     try {
-      await axios.post(`http://192.168.1.195:5000/api/organizations`, { name }, {
+      await axios.post(`${API_BASE_URL}/api/organizations`, { name }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSuccess('Организация добавлена');
@@ -61,7 +62,7 @@ const OrganizationList = () => {
     setError('');
     setSuccess('');
     try {
-      await axios.delete(`http://192.168.1.195:5000/api/organizations/${id}`, {
+      await axios.delete(`${API_BASE_URL}/api/organizations/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSuccess('Организация удалена');

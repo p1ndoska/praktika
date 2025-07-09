@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Select from 'react-select';
 import positionService from '../../services/positionService';
+import API_BASE_URL from '../../apiConfig';
 
 function formatPhone(value) {
     let digits = value.replace(/\D/g, '');
@@ -104,7 +105,7 @@ const CreateRecord = () => {
         // Получаем список внешних подключений
         const fetchConnections = async () => {
             try {
-                const res = await axios.get(`http://192.168.1.195:5000/api/external-connections`, {
+                const res = await axios.get(`${API_BASE_URL}/api/external-connections`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 setExternalConnections(res.data.data || res.data);

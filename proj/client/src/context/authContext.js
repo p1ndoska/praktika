@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 
 const AuthContext = createContext(null);
 
@@ -44,7 +45,7 @@ export const AuthProvider = ({ children }) => {
             if (token && user) return; // Если уже есть пользователь, пропускаем
 
             try {
-                const response = await axios.get('http://192.168.1.195:5000/api/auth/me', {
+                const response = await axios.get(`${API_BASE_URL}/api/auth/me`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 

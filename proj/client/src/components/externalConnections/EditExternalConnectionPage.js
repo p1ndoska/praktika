@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../context/authContext';
 import ExternalConnectionForm from './ExternalConnectionForm';
+import API_BASE_URL from '../../apiConfig';
 
 const EditExternalConnectionPage = () => {
   const { id } = useParams();
@@ -18,7 +19,7 @@ const EditExternalConnectionPage = () => {
         setLoading(true);
         console.log('Загружаем подключение с ID:', id);
         
-        const response = await axios.get(`http://192.168.1.195:5000/api/external-connections?page=1&limit=1000`, {
+        const response = await axios.get(`${API_BASE_URL}/api/external-connections?page=1&limit=1000`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         

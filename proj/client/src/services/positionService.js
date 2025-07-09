@@ -1,6 +1,7 @@
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 
-const API_URL = `http://192.168.1.195:5000/api/positions`;
+const API_URL = `${API_BASE_URL}/api/positions`;
 
 const getPositions = async (token) => {
   const res = await axios.get(API_URL, {

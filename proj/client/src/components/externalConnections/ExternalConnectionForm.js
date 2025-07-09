@@ -5,6 +5,7 @@ import positionService from '../../services/positionService';
 import { useAuth } from '../../context/authContext';
 import Select from 'react-select';
 import POSITIONS from '../../constants/positions';
+import API_BASE_URL from '../../apiConfig';
 
 function formatPhone(value) {
   // Удаляем всё, кроме цифр
@@ -217,7 +218,7 @@ const ExternalConnectionForm = ({
 
       console.log('Отправляемые данные:', requestData);
 
-      const url = isEditMode ? `http://192.168.1.195:5000/api/external-connections/${form.id}` : `http://192.168.1.195:5000/api/external-connections/add`;
+      const url = isEditMode ? `${API_BASE_URL}/api/external-connections/${form.id}` : `${API_BASE_URL}/api/external-connections/add`;
       const method = isEditMode ? 'put' : 'post';
 
       const response = await axios[method](url, requestData, {

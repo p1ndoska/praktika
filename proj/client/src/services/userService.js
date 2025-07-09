@@ -1,6 +1,7 @@
 import axios from 'axios';
+import API_BASE_URL from '../apiConfig';
 
-const API_URL = `http://192.168.1.195:5000/api/users`;
+const API_URL = `${API_BASE_URL}/api/users`;
 
 // Глобальный перехватчик для обработки 401 Unauthorized
 axios.interceptors.response.use(
