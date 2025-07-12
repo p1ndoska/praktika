@@ -9,21 +9,40 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(() => {
         // Пытаемся восстановить пользователя из localStorage при инициализации
         const savedUser = localStorage.getItem('user');
-        return savedUser ? JSON.parse(savedUser) : null;
+        if (!savedUser || savedUser === 'undefined' || savedUser === 'null') {
+            return null;
+        }
+        try {
+            return JSON.parse(savedUser);
+        } catch (error) {
+            console.error('Error parsing user from localStorage:', error);
+            localStorage.removeItem('user'); // Очищаем некорректные данные
+            return null;
+        }
     });
 
-    const [token, setToken] = useState(localStorage.getItem('token'));
+    const [token, setToken] = useState(() => {
+        const savedToken = localStorage.getItem('token');
+        if (!savedToken || savedToken === 'undefined' || savedToken === 'null') {
+            return null;
+        }
+        return savedToken;
+    });
     const navigate = useNavigate();
 
     const login = useCallback((userData) => {
-        localStorage.setItem('token', userData.token);
-        localStorage.setItem('user', JSON.stringify(userData.user));
-        setToken(userData.token);
-        setUser(userData.user);
-        if (userData.user.mustChangePassword) {
-            navigate('/change-password');
+        if (userData && userData.token && userData.user) {
+            localStorage.setItem('token', userData.token);
+            localStorage.setItem('user', JSON.stringify(userData.user));
+            setToken(userData.token);
+            setUser(userData.user);
+            if (userData.user.mustChangePassword) {
+                navigate('/change-password');
+            } else {
+                navigate('/records');
+            }
         } else {
-            navigate('/records');
+            console.error('Invalid userData provided to login:', userData);
         }
     }, [navigate]);
 
@@ -36,8 +55,12 @@ export const AuthProvider = ({ children }) => {
     }, [navigate]);
 
     const updateUser = useCallback((updatedUser) => {
-        localStorage.setItem('user', JSON.stringify(updatedUser));
-        setUser(updatedUser);
+        if (updatedUser) {
+            localStorage.setItem('user', JSON.stringify(updatedUser));
+            setUser(updatedUser);
+        } else {
+            console.error('Invalid updatedUser provided to updateUser:', updatedUser);
+        }
     }, []);
 
     useEffect(() => {
@@ -61,8 +84,14 @@ export const AuthProvider = ({ children }) => {
                     lastPasswordChange: response.data.lastPasswordChange
                 };
 
-                localStorage.setItem('user', JSON.stringify(userData));
-                setUser(userData);
+                if (userData && userData.id && userData.username) {
+                    localStorage.setItem('user', JSON.stringify(userData));
+                    setUser(userData);
+                } else {
+                    console.error('Invalid userData received from server:', userData);
+                    logout();
+                    return;
+                }
 
                 if (userData.firstLogin || userData.mustChangePassword) {
                     navigate('/change-password');
