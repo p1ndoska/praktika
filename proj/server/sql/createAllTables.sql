@@ -7,6 +7,15 @@ BEGIN
     );
 END
 
+-- Таблица кураторов
+IF OBJECT_ID(N'Curators', N'U') IS NULL
+BEGIN
+    CREATE TABLE Curators (
+        Id INT IDENTITY(1,1) PRIMARY KEY,
+        Name NVARCHAR(100) NOT NULL UNIQUE
+    );
+END
+
 -- Таблица организаций
 IF OBJECT_ID(N'Organizations', N'U') IS NULL
 BEGIN

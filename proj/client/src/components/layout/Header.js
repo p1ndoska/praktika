@@ -34,6 +34,9 @@ const Header = () => {
                         {user && user.role === 'admin' && (
                             <Nav.Link as={Link} to="/positions">Должности</Nav.Link>
                         )}
+                        {user && user.role === 'admin' && (
+                            <Nav.Link as={Link} to="/curators">Кураторы</Nav.Link>
+                        )}
                     </Nav>
                     <Nav>
                         {user ? (

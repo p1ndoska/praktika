@@ -5,6 +5,7 @@ import { useAuth } from '../../context/authContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import Select from 'react-select';
 import positionService from '../../services/positionService';
+import curatorService from '../../services/curatorService';
 import './RecordForms.css';
 
 const EditRecord = () => {
@@ -19,6 +20,9 @@ const EditRecord = () => {
     const [positions, setPositions] = useState([]);
     const [positionsLoading, setPositionsLoading] = useState(false);
     const [positionsError, setPositionsError] = useState('');
+    const [curators, setCurators] = useState([]);
+    const [curatorsLoading, setCuratorsLoading] = useState(false);
+    const [curatorsError, setCuratorsError] = useState('');
 
     const [formData, setFormData] = useState({
         UserFullName: '',
@@ -139,6 +143,20 @@ const EditRecord = () => {
             }
         };
         fetchPositions();
+
+        const fetchCurators = async () => {
+            setCuratorsLoading(true);
+            setCuratorsError('');
+            try {
+                const data = await curatorService.getCurators(token);
+                setCurators(data.map(c => ({ value: c.Name, label: c.Name })));
+            } catch (e) {
+                setCuratorsError('Ошибка при загрузке кураторов');
+            } finally {
+                setCuratorsLoading(false);
+            }
+        };
+        fetchCurators();
     }, [token]);
 
     const handleChange = (e) => {
@@ -468,12 +486,20 @@ const EditRecord = () => {
 
                                 <Form.Group className="mb-3">
                                     <Form.Label>Куратор</Form.Label>
-                                    <Form.Control
-                                        type="text"
+                                    <Select
                                         name="Curator"
-                                        value={formData.Curator}
-                                        onChange={handleChange}
+                                        options={curators}
+                                        value={curators.find(opt => opt.value === formData.Curator) || null}
+                                        onChange={option => setFormData(prev => ({ ...prev, Curator: option ? option.value : '' }))}
+                                        placeholder={curatorsLoading ? 'Загрузка...' : 'Выберите куратора...'}
+                                        isClearable
+                                        className={errors.Curator ? 'is-invalid' : ''}
+                                        isLoading={curatorsLoading}
                                     />
+                                    {errors.Curator && (
+                                        <div className="invalid-feedback d-block">{errors.Curator}</div>
+                                    )}
+                                    {curatorsError && <div className="text-danger small mt-1">{curatorsError}</div>}
                                 </Form.Group>
 
                                 <Form.Group className="mb-3">

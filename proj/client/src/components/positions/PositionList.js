@@ -137,7 +137,7 @@ const PositionList = () => {
         <thead>
           <tr>
             <th>Название</th>
-            <th style={{width: 120}}>Действия</th>
+            <th style={{width: 180}}>Действия</th>
           </tr>
         </thead>
         <tbody>
@@ -161,9 +161,9 @@ const PositionList = () => {
                 )}
               </td>
               <td>
-                <div className="d-flex gap-2">
-                  <button className="btn btn-primary btn-sm" onClick={() => handleEdit(pos.Id, pos.Name)} disabled={loading}>Изменить</button>
-                  <button className="btn btn-danger btn-sm" onClick={() => handleDelete(pos.Id)} disabled={loading}>Удалить</button>
+                <div className="d-flex gap-1">
+                  <button className="btn btn-primary btn-sm px-2" style={{whiteSpace: 'nowrap', minWidth: '70px'}} onClick={() => handleEdit(pos.Id, pos.Name)} disabled={loading}>Изменить</button>
+                  <button className="btn btn-danger btn-sm px-2" style={{whiteSpace: 'nowrap', minWidth: '70px'}} onClick={() => handleDelete(pos.Id)} disabled={loading}>Удалить</button>
                 </div>
               </td>
             </tr>

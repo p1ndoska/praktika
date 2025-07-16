@@ -7,6 +7,7 @@ const recordRoutes = require('./routes/recordRoutes');
 const organizationRoutes = require('./routes/organizationRoutes');
 const externalConnectionRoutes = require('./routes/externalConnectionRoutes');
 const positionRoutes = require('./routes/positionRoutes');
+const curatorRoutes = require('./routes/curatorRoutes');
 const bcrypt = require('bcryptjs');
 const { poolPromise, sql } = require('./config/db'); // путь может отличаться
 
@@ -23,6 +24,7 @@ app.use('/api/records', recordRoutes);
 app.use('/api/organizations', organizationRoutes);
 app.use('/api/external-connections', externalConnectionRoutes);
 app.use('/api/positions', positionRoutes);
+app.use('/api/curators', curatorRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {

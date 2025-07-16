@@ -20,6 +20,7 @@ import ExternalConnectionListPage from './components/externalConnections/Externa
 import AddExternalConnectionPage from './components/externalConnections/AddExternalConnectionPage';
 import EditExternalConnectionPage from './components/externalConnections/EditExternalConnectionPage';
 import PositionList from './components/positions';
+import CuratorList from './components/curators/CuratorList';
 
 function App() {
     return (
@@ -131,6 +132,14 @@ function App() {
                             element={
                                 <AdminRoute>
                                     <PositionList />
+                                </AdminRoute>
+                            }
+                        />
+                        <Route
+                            path="/curators"
+                            element={
+                                <AdminRoute>
+                                    <CuratorList />
                                 </AdminRoute>
                             }
                         />
