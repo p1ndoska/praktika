@@ -80,6 +80,7 @@ BEGIN
         Position NVARCHAR(255) NULL,
         Email NVARCHAR(255) NULL,
         Phone NVARCHAR(50) NULL,
+        ObjectName NVARCHAR(255) NULL,
         AccessStart DATETIME NOT NULL,
         AccessEnd DATETIME NULL
     );

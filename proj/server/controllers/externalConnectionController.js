@@ -1,7 +1,7 @@
 const { poolPromise, sql } = require('../config/db');
 
 const addExternalConnection = async (req, res) => {
-    const { organizationId, fullName, position, email, phone, accessStart, accessEnd } = req.body;
+    const { organizationId, fullName, position, email, phone, objectName, accessStart, accessEnd } = req.body;
 
     if (!organizationId || !fullName || !accessStart) {
         return res.status(400).json({ message: 'Обязательные поля не заполнены' });
@@ -23,11 +23,12 @@ const addExternalConnection = async (req, res) => {
             .input('Position', sql.NVarChar(255), position)
             .input('Email', sql.NVarChar(255), email)
             .input('Phone', sql.NVarChar(50), phone)
+            .input('ObjectName', sql.NVarChar(255), objectName)
             .input('AccessStart', sql.DateTime, accessStart)
             .input('AccessEnd', sql.DateTime, accessEnd)
             .query(`
-                INSERT INTO ExternalConnections (Organization, FullName, Position, Email, Phone, AccessStart, AccessEnd)
-                VALUES (@Organization, @FullName, @Position, @Email, @Phone, @AccessStart, @AccessEnd)
+                INSERT INTO ExternalConnections (Organization, FullName, Position, Email, Phone, ObjectName, AccessStart, AccessEnd)
+                VALUES (@Organization, @FullName, @Position, @Email, @Phone, @ObjectName, @AccessStart, @AccessEnd)
             `);
 
         res.json({ message: 'Подключение успешно добавлено' });
@@ -72,7 +73,7 @@ const deleteExternalConnection = async (req, res) => {
 
 const updateExternalConnection = async (req, res) => {
     const { id } = req.params;
-    const { organizationId, fullName, position, email, phone, accessStart, accessEnd } = req.body;
+    const { organizationId, fullName, position, email, phone, objectName, accessStart, accessEnd } = req.body;
 
     if (!id || !organizationId || !fullName || !accessStart) {
         return res.status(400).json({ message: 'Обязательные поля не заполнены (id, organizationId, fullName, accessStart)' });
@@ -100,6 +101,7 @@ const updateExternalConnection = async (req, res) => {
                 Position = @Position,
                 Email = @Email,
                 Phone = @Phone,
+                ObjectName = @ObjectName,
                 AccessStart = @AccessStart,
                 AccessEnd = @AccessEnd
             WHERE Id = @Id
@@ -112,6 +114,7 @@ const updateExternalConnection = async (req, res) => {
             .input('Position', sql.NVarChar(255), position || null)
             .input('Email', sql.NVarChar(255), email || null)
             .input('Phone', sql.NVarChar(50), phone || null)
+            .input('ObjectName', sql.NVarChar(255), objectName || null)
             .input('AccessStart', sql.DateTime, accessStart)
             .input('AccessEnd', sql.DateTime, accessEnd || null)
             .query(updateQuery);

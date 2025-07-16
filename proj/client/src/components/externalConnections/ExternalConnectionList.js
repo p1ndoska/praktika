@@ -33,6 +33,7 @@ const ExternalConnectionList = ({ connections, onEdit, onDelete, loading = false
                 <th scope="col">Должность</th>
                 <th scope="col">Email</th>
                 <th scope="col">Телефон</th>
+                <th scope="col">Объект подключения</th>
                 <th scope="col">Дата начала</th>
                 <th scope="col">Дата окончания</th>
                 <th scope="col">Действия</th>
@@ -77,6 +78,7 @@ const ExternalConnectionList = ({ connections, onEdit, onDelete, loading = false
                         {conn.Phone || conn.phone}
                       </a>
                     </td>
+                    <td>{conn.ObjectName || conn.objectName || 'Не указано'}</td>
                     <td>
                       {startDate ? new Date(startDate).toLocaleString('ru-RU') : 'Не указано'}
                     </td>

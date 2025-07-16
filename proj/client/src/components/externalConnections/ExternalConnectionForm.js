@@ -55,6 +55,7 @@ const ExternalConnectionForm = ({
     position: '',
     email: '',
     phone: '',
+    objectName: '',
     accessStart: '',
     accessEnd: ''
   });
@@ -125,6 +126,7 @@ const ExternalConnectionForm = ({
         position: connection.Position || connection.position || '',
         email: connection.Email || connection.email || '',
         phone: connection.Phone || connection.phone || '',
+        objectName: connection.ObjectName || connection.objectName || '',
         accessStart: formatDateForInput(connection.AccessStart || connection.accessStart),
         accessEnd: formatDateForInput(connection.AccessEnd || connection.accessEnd)
       });
@@ -172,6 +174,7 @@ const ExternalConnectionForm = ({
     if (!form.position) newErrors.position = 'Должность обязательна';
     if (!form.phone.trim()) newErrors.phone = 'Телефон обязателен';
     if (!form.email.trim()) newErrors.email = 'Email обязателен';
+    if (!form.objectName.trim()) newErrors.objectName = 'Объект подключения обязателен';
     if (!form.accessStart) newErrors.accessStart = 'Дата начала обязательна';
     if (!form.accessEnd) newErrors.accessEnd = 'Дата окончания обязательна';
     
@@ -212,6 +215,7 @@ const ExternalConnectionForm = ({
         position: form.position,
         email: form.email,
         phone: form.phone,
+        objectName: form.objectName,
         accessStart: formatDateForServer(form.accessStart),
         accessEnd: formatDateForServer(form.accessEnd)
       };
@@ -241,6 +245,7 @@ const ExternalConnectionForm = ({
           position: '',
           email: '',
           phone: '',
+          objectName: '',
           accessStart: '',
           accessEnd: ''
         });
@@ -343,6 +348,19 @@ const ExternalConnectionForm = ({
           required
         />
         {fieldErrors.phone && <div className="invalid-feedback d-block">{fieldErrors.phone}</div>}
+      </div>
+
+      <div className="mb-3">
+        <label className="form-label">Объект подключения *</label>
+        <input
+          name="objectName"
+          className={`form-control${fieldErrors.objectName ? ' is-invalid' : ''}`}
+          placeholder="Название объекта подключения"
+          value={form.objectName}
+          onChange={handleChange}
+          required
+        />
+        {fieldErrors.objectName && <div className="invalid-feedback d-block">{fieldErrors.objectName}</div>}
       </div>
 
       <div className="mb-3">

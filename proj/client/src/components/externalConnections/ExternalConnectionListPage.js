@@ -76,12 +76,14 @@ const ExternalConnectionListPage = () => {
     const pos = (conn.Position || conn.position || '').toLowerCase();
     const email = (conn.Email || conn.email || '').toLowerCase();
     const phone = (conn.Phone || conn.phone || '').toLowerCase();
+    const objectName = (conn.ObjectName || conn.objectName || '').toLowerCase();
     return (
       org.includes(search.toLowerCase()) ||
       fio.includes(search.toLowerCase()) ||
       pos.includes(search.toLowerCase()) ||
       email.includes(search.toLowerCase()) ||
-      phone.includes(search.toLowerCase())
+      phone.includes(search.toLowerCase()) ||
+      objectName.includes(search.toLowerCase())
     );
   });
 
@@ -146,7 +148,7 @@ const ExternalConnectionListPage = () => {
             <input
               type="text"
               className="form-control"
-              placeholder="Поиск по организации, ФИО, должности, email или телефону..."
+              placeholder="Поиск по организации, ФИО, должности, email, телефону или объекту подключения..."
               value={search}
               onChange={e => setSearch(e.target.value)}
             />
